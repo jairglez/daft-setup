@@ -1,3 +1,15 @@
+- name: remove not required boot scripts
+  file: path=/opt/scripts/boot/{{ item }} state=absent
+  with_items:
+  - am335x_evm.sh
+  - autoconfigure_usb0.sh
+  - capemgr.sh
+
+- name: disable not required services
+  service: name={{ item }} enabled=no
+  with_items:
+  - connman
+
 - name: install required packages
   apt: pkg={{ item }} state=latest
   with_items:
