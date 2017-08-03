@@ -1,0 +1,12 @@
+---
+- hosts: localhost
+  roles:
+  - control-host
+
+- hosts: aft-hosts
+  remote_user: debian
+  become: true
+  roles:
+  - common
+  - aft-host
+  environment: "{{ proxy_env }}"
