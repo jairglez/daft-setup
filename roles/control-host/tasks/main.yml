@@ -1,0 +1,2 @@
+- name: print localhost's date and time
+  debug: msg="Current date and time is {{ ansible_date_time.iso8601 }}"

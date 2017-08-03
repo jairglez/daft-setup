@@ -1,0 +1,19 @@
+- name: synchronize with control host's time
+  command: date --set {{ hostvars.localhost.ansible_date_time.iso8601 }}
+  when: ansible_date_time.date != hostvars.localhost.ansible_date_time.date
+  tags: sync_time
+
+- name: gather os specific variables
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
+    - "{{ ansible_distribution }}.yml"
+    - "defaults.yml"
+  tags: vars
+
+- name: configure apt proxies
+  template: src={{ item }} dest={{ APT_PROXY_CONFIG }} backup=no
+  with_first_found:
+    - "{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.apt_proxy_config.j2"
+    - "{{ ansible_distribution }}.apt_proxy_config.j2"
+  tags: template-apt-proxy-config

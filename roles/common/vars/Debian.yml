@@ -1,0 +1,1 @@
+APT_PROXY_CONFIG: /etc/apt/apt.conf.d/03-proxy-https
