@@ -37,3 +37,6 @@
 
 - name: clone DAFT repository
   git: repo=https://github.com/01org/DAFT dest=/root/DAFT
+
+- name: install AFT
+  shell: "cd /root/DAFT/testing_harness; python3 ./setup.py install"
