@@ -28,3 +28,12 @@
   - pyserial
   - netifaces
   - unittest-xml-reporting
+
+- name: configure https proxy for git
+  git_config: scope=global name=https.proxy value={{ https_proxy }}
+
+- name: configure http proxy for git
+  git_config: scope=global name=http.proxy value={{ http_proxy }}
+
+- name: clone DAFT repository
+  git: repo=https://github.com/01org/DAFT dest=/root/DAFT
