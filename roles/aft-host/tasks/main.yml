@@ -38,9 +38,9 @@
   tags: aft_install
 
 - name: clone DAFT repository
-  git: repo=https://github.com/01org/DAFT dest=/root/DAFT
+  git: repo={{ daft_repo_url }} dest={{ daft_repo_path }}
   tags: aft_install
 
 - name: install AFT
-  shell: "cd /root/DAFT/testing_harness; python3 ./setup.py install"
+  shell: "cd {{ daft_testing_harness_path }}; python3 ./setup.py install"
   tags: aft_install
