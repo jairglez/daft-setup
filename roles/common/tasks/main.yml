@@ -1,3 +1,10 @@
+- name: set time zone
+  command: timedatectl set-timezone "{{ local_timezone }}"
+  when: >
+    ansible_date_time.tz != hostvars.localhost.ansible_date_time.tz or
+    ansible_date_time.tz_offset != hostvars.localhost.ansible_date_time.tz_offset
+  tags: sync_time
+
 - name: synchronize with control host's time
   command: date --set {{ hostvars.localhost.ansible_date_time.iso8601 }}
   when: ansible_date_time.date != hostvars.localhost.ansible_date_time.date

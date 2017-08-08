@@ -50,3 +50,5 @@
 # Uncomment and add your proxy server's details here:
 # http_proxy=http://yourproxyaddress:proxyport
 # https_proxy=http://yourproxyaddress:proxyport
+# Uncomment and add your timezone here:
+# local_timezone=local/timezone
