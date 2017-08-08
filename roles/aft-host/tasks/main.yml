@@ -75,3 +75,9 @@
   - initialize_testing_harness.service
   - libcomposite.service
   tags: aft_init
+
+- name: copy AFT kbsequences directory
+  command: cp -ruv {{ daft_testing_harness_extras_path }}/kbsequences {{ home_path }}
+  register: kbsequences_cp_output
+  changed_when: kbsequences_cp_output.stdout != ""
+  tags: aft_init
