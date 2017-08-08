@@ -7,3 +7,9 @@ aft_init_scripts_path: "{{ daft_testing_harness_extras_path }}/initialize_testin
 aft_init_scripts_dest_path: /usr/bin
 systemd_system_path: /etc/systemd/system
 multi_user_target_wants_path: /etc/systemd/system/multi-user.target.wants
+aft_external_interface: eth0
+aft_internal_interface: usb0
+dut_dest_port: 2233
+dut_ip_address: 192.168.7.2
+dut_port: 22
+iptables_conf_file_path: /etc/iptables.rules

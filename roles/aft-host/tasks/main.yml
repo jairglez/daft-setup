@@ -97,3 +97,49 @@
   register: var_cp_output
   changed_when: var_cp_output.stdout != ""
   tags: aft_init
+
+- name: set NAT masquerading on external interface
+  iptables:
+    table: nat
+    chain: POSTROUTING
+    out_interface: "{{ aft_external_interface }}"
+    jump: MASQUERADE
+  register: iptables_ext_masquerading
+  tags: network_config
+
+- name: enable forwarding on internal interface
+  iptables:
+    chain: FORWARD
+    in_interface: "{{ aft_internal_interface }}"
+    jump: ACCEPT
+  register: iptables_int_forwarding
+  tags: network_config
+
+- name: forward selected TCP port to DUT's IP address
+  iptables:
+    table: nat
+    chain: PREROUTING
+    in_interface: "{{ aft_external_interface }}"
+    protocol: tcp
+    destination_port: "{{ dut_dest_port }}"
+    to_destination: "{{ dut_ip_address }}:{{ dut_port }}"
+    jump: DNAT
+  register: iptables_port_forwarding
+  tags: network_config
+
+- name: ensure iptables configuration file exists
+  copy:
+    content: ""
+    dest: "{{ iptables_conf_file_path }}"
+    force: no
+  register: iptables_conf_file_exists
+  tags: network_config
+
+- name: save iptables
+  shell: iptables-save > {{ iptables_conf_file_path }}
+  when: >
+    iptables_ext_masquerading.changed or
+    iptables_int_forwarding.changed or
+    iptables_port_forwarding.changed or
+    iptables_conf_file_exists.changed 
+  tags: network_config
