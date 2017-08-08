@@ -81,3 +81,19 @@
   register: kbsequences_cp_output
   changed_when: kbsequences_cp_output.stdout != ""
   tags: aft_init
+
+- name: create required folders for test harness
+  file: path="{{ item }}" state=directory
+  with_items:
+  - "{{ home_path }}/support_image"
+  - "{{ home_path }}/workspace"
+  - "{{ home_path }}/.ssh"
+  - /ramdisk
+  - /config
+  tags: aft_init
+
+- name: copy /var directory
+  command: cp -ruv /var /_var
+  register: var_cp_output
+  changed_when: var_cp_output.stdout != ""
+  tags: aft_init
