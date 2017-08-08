@@ -2,3 +2,7 @@ home_path: /root
 daft_repo_url: https://github.com/01org/DAFT.git
 daft_repo_path: "{{ home_path }}/DAFT"
 daft_testing_harness_path: "{{ daft_repo_path }}/testing_harness"
+aft_init_scripts_path: "{{ daft_repo_path }}/testing_harness_image_extras/initialize_testing_harness"
+aft_init_scripts_dest_path: /usr/bin
+systemd_system_path: /etc/systemd/system
+multi_user_target_wants_path: /etc/systemd/system/multi-user.target.wants

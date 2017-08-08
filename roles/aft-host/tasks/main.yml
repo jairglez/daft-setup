@@ -44,3 +44,34 @@
 - name: install AFT
   shell: "cd {{ daft_testing_harness_path }}; python3 ./setup.py install"
   tags: aft_install
+
+- name: copy AFT initialization scripts
+  copy:
+    src: "{{ aft_init_scripts_path }}/{{ item }}"
+    dest: "{{ aft_init_scripts_dest_path }}"
+    remote_src: True
+  with_items:
+  - stop_libcomposite
+  - start_libcomposite
+  - initialize_testing_harness
+  tags: aft_init
+
+- name: copy AFT initialization services to systemd path
+  copy:
+    src: "{{ aft_init_scripts_path }}/{{ item }}"
+    dest: "{{ systemd_system_path }}"
+    remote_src: True
+  with_items:
+  - initialize_testing_harness.service
+  - libcomposite.service
+  tags: aft_init
+
+- name: enable AFT initialization services
+  file:
+    src: "{{ systemd_system_path }}/{{ item }}"
+    dest: "{{ multi_user_target_wants_path }}/{{ item }}"
+    state: link
+  with_items:
+  - initialize_testing_harness.service
+  - libcomposite.service
+  tags: aft_init
