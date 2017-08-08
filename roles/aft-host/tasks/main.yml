@@ -31,12 +31,16 @@
 
 - name: configure https proxy for git
   git_config: scope=global name=https.proxy value={{ https_proxy }}
+  tags: aft_install
 
 - name: configure http proxy for git
   git_config: scope=global name=http.proxy value={{ http_proxy }}
+  tags: aft_install
 
 - name: clone DAFT repository
   git: repo=https://github.com/01org/DAFT dest=/root/DAFT
+  tags: aft_install
 
 - name: install AFT
   shell: "cd /root/DAFT/testing_harness; python3 ./setup.py install"
+  tags: aft_install
