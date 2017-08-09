@@ -13,3 +13,10 @@ dut_dest_port: 2233
 dut_ip_address: 192.168.7.2
 dut_port: 22
 iptables_conf_file_path: /etc/iptables.rules
+sysctl_conf_file_path: /etc/sysctl.conf
+network_if_conf_file_path: /etc/network/interfaces
+dnsmasq_conf_file_path: /etc/dnsmasq.conf
+fstab_conf_file_path: /etc/fstab
+home_ssh_conf_file_path: "{{ home_path }}/.ssh/config"
+ssh_identity_file_path: "{{ home_path }}/.ssh/id_rsa_testing_harness"
+dhcp_lease_time: 10m

@@ -52,3 +52,7 @@
 # https_proxy=http://yourproxyaddress:proxyport
 # Uncomment and add your timezone here:
 # local_timezone=local/timezone
+# Update the next values according to your configuration:
+control_host_ip_address=192.168.30.1
+control_host_daft_support_img_path=/daft/support_img
+control_host_daft_workspace_path=/home/tester

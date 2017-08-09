@@ -1,0 +1,3 @@
+{{ control_host_ip_address }}:{{ control_host_daft_support_img_path }} {{ home_path }}/support_image nfs rsize=8192,wsize=8192,timeo=14,intr,nolock,auto
+{{ control_host_ip_address }}:{{ control_host_daft_workspace_path }} {{ home_path }}/workspace nfs rsize=8192,wsize=8192,timeo=14,intr,nolock,auto
+tmpfs /ramdisk tmpfs defaults,size=100M 0 0
