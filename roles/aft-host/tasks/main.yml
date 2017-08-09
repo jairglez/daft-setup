@@ -178,3 +178,36 @@
       Host *
           IdentityFile {{ ssh_identity_file_path }}
   tags: network_config
+
+- name: remove default ntp servers
+  lineinfile:
+    path: "{{ ntp_conf_file_path }}"
+    regexp: '^server .*pool\.ntp\.org.*$'
+    state: absent
+  tags: ntp_config
+
+- name: add ntp server configuration
+  blockinfile:
+    path: "{{ ntp_conf_file_path }}"
+    state: present
+    block: |
+      server {{ control_host_ip_address }} iburst
+      disable auth
+      broadcastclient
+  tags: ntp_config
+
+- name: remove default ntpdate servers
+  lineinfile:
+    path: "{{ ntpdate_conf_file_path }}"
+    regexp: '^NTPSERVERS=.*pool\.ntp\.org.*$'
+    state: absent
+  tags: ntp_config
+
+- name: add ntpdate server configuration
+  blockinfile:
+    path: "{{ ntpdate_conf_file_path }}"
+    state: present
+    block: |
+      NTPSERVERS="{{ control_host_ip_address }}"
+      UPDATE_HWCLOCK="yes"
+  tags: ntp_config
